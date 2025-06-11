@@ -1,16 +1,17 @@
-import { Column, Entity, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn, Unique } from "typeorm";
 
-@Entity()
+@Entity({ name: 'game' })
+@Unique(['game_id'])
 export class GameEntity {
     @PrimaryGeneratedColumn('uuid')
-    userid: string;
+    game_id: string;
 
     @Column({ type: 'varchar' })
     question: string;
 
     @Column({ type: 'varchar' })
-    option1: string;
+    option_1: string;
 
     @Column({ type: 'varchar' })
-    option2: string;
+    option_2: string;
 }
