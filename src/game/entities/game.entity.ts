@@ -9,9 +9,9 @@ export class GameEntity {
     @Column({ type: 'varchar' })
     question: string;
 
-    @Column({ type: 'varchar' })
+    @Column({ type: 'varchar', nullable: false })
     option_1: string;
 
-    @Column({ type: 'varchar' })
+    @Column({ type: 'varchar', nullable: false })
     option_2: string;
 }
