@@ -6,8 +6,11 @@ export class GameEntity {
     @PrimaryGeneratedColumn('uuid')
     game_id: string;
 
-    @Column({ type: 'varchar' })
-    question: string;
+    @Column({
+        type: 'varchar',
+        default: null,
+    })
+    question?: string;
 
     @Column({ type: 'varchar', nullable: false })
     option_1: string;
