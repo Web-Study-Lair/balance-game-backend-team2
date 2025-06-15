@@ -7,11 +7,11 @@ export const typeORMConfig: TypeOrmModuleAsyncOptions = {
     useFactory: async (configService: ConfigService) => ({
 
         type: 'mysql',
-        host: 'localhost',
-        port: 3306,
+        host: configService.get<string>('DB_HOST'),
+        port: configService.get<number>('DB_USERNAME'),
         username: configService.get<string>('DB_USERNAME'),
         password: configService.get<string>('DB_PASSWORD'),
-        database: 'balancegame',
+        database: configService.get<string>('DB_NAME'),
         entities: ['dist/**/*.entity.{ts,js}'],
         synchronize: true,
     }),
