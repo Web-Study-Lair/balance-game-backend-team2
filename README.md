@@ -1,13 +1,17 @@
 balance-game-backend-team2
 
-# 1. git clone
+# Balance-game 백엔드 애플리케이션
+
+## 설치 및 실행 방법
+
+> ### 1. git clone
 
 ```
 git clone https://github.com/Web-Study-Lair/balance-game-backend-team2.git
 ```
 
 
-# 2. Docker를 이용한 mysql 설치
+> ### 2. Docker를 이용한 mysql 설치
 
 먼저 [Docker 공식 홈페이지](https://www.docker.com/products/docker-desktop/)에서 Docker Desktop을 **설치 후 실행**해주세요.
 
@@ -29,7 +33,7 @@ docker ps -a
 ```
 
 
-# 3. 환경 변수 설정 및 DB 생성
+> ### 3. 환경 변수 설정 및 DB 생성
 
 1번에서 clone해온 폴더를 vscode(혹은 cursor)에서 열어주세요.
 
@@ -56,7 +60,7 @@ npm run init:db
 위의 커맨드를 통해 생성된 DB의 이름은 DB_NAME과 동일합니다.
 
 
-# 4. 서버 실행
+> ### 4. 서버 실행
 
 백엔드 서버를 실행하기 위해 먼저 mysql 컨테이너를 실행합니다. 
 
