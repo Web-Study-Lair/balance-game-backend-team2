@@ -1,13 +1,18 @@
-balance-game-backend-team2
-
 # Balance-game 백엔드 애플리케이션
 
 ## 설치 및 실행 방법
 
-> ### 1. git clone
+> ### 1. git clone 및 패키지 설치
 
 ```
+# git clone
 git clone https://github.com/Web-Study-Lair/balance-game-backend-team2.git
+
+# clone된 폴더로 이동
+cd /BALANCE-GAME-BACKEND
+
+# 패키지 설치
+npm i
 ```
 
 
