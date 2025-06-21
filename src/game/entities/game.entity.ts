@@ -10,11 +10,17 @@ export class GameEntity {
         type: 'varchar',
         default: null,
     })
-    question?: string;
+    title?: string;
 
     @Column({ type: 'varchar', nullable: false })
-    option_1: string;
+    option_1_text: string;
+
+    @Column()
+    option_1_img: string;
 
     @Column({ type: 'varchar', nullable: false })
-    option_2: string;
+    option_2_text: string;
+
+    @Column()
+    option_2_img: string;
 }
