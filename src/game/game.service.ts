@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { CreateGameDto } from './dto/create-game.dto';
-import { UpdateGameDto } from './dto/update-game.dto';
+import { DeleteGameDto } from './dto/delete-game.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { GameEntity } from './entities/game.entity';
-import { Repository } from 'typeorm';
+import { DeepPartial, Repository } from 'typeorm';
 import { UUID } from 'crypto';
 
 @Injectable()
@@ -13,23 +13,31 @@ export class GameService {
   ) { }
 
   async createGame(createGameDto: CreateGameDto) {
-    console.log(`${createGameDto.question}, ${createGameDto.option_1}, ${createGameDto.option_2}`);
-    return await this.gameRepository.save(createGameDto);
+    const game = this.gameRepository.create({
+      user_id: createGameDto.user.userId,
+      title: createGameDto.balance.title,
+      option_1_text: createGameDto.balance.option1.text,
+      option_1_img: createGameDto.balance.option1.img,
+      option_2_text: createGameDto.balance.option2.text,
+      option_2_img: createGameDto.balance.option2.img
+    });
+
+    return await this.gameRepository.save(game);
   }
 
   async findAllGames() {
     return await this.gameRepository.find();
   }
 
-  async findOneGame(id: string) {
-    return await this.gameRepository.findOneBy({ game_id: id });
+  async findGamesByUserID(userId: string) {
+    return await this.gameRepository.find({
+      where: {
+        user_id: userId
+      },
+    });
   }
 
-  // update(id: number, updateGameDto: UpdateGameDto) {
-  //   return `This action updates a #${id} game`;
-  // }
-
-  async removeGame(id: string) {
-    return await this.gameRepository.delete({ game_id: id });
+  async removeGame(deleteGameDto: DeleteGameDto) {
+    return await this.gameRepository.delete({ game_id: deleteGameDto.gameId });
   }
 }

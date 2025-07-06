@@ -1,7 +1,7 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, ParseUUIDPipe } from '@nestjs/common';
 import { GameService } from './game.service';
 import { CreateGameDto } from './dto/create-game.dto';
-import { UpdateGameDto } from './dto/update-game.dto';
+import { DeleteGameDto } from './dto/delete-game.dto';
 
 @Controller('game')
 export class GameController {
@@ -17,18 +17,13 @@ export class GameController {
     return await this.gameService.findAllGames();
   }
 
-  @Get('/:id')
-  findOneGame(@Param('id', ParseUUIDPipe) id: string) {
-    return this.gameService.findOneGame(id);
+  @Get('/:userId')
+  findOneGame(@Param('userId') userId: string) {
+    return this.gameService.findGamesByUserID(userId);
   }
 
-  // @Patch(':id')
-  // update(@Param('id') id: string, @Body() updateGameDto: UpdateGameDto) {
-  //   return this.gameService.update(+id, updateGameDto);
-  // }
-
-  @Delete('/:id')
-  async removeGame(@Param('id', ParseUUIDPipe) id: string) {
-    return await this.gameService.removeGame(id);
+  @Delete('/')
+  async removeGame(@Body() deleteGameDto: DeleteGameDto) {
+    return await this.gameService.removeGame(deleteGameDto);
   }
 }
