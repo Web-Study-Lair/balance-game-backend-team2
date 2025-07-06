@@ -4,7 +4,7 @@ import { Column, Entity, PrimaryGeneratedColumn, Unique } from "typeorm";
 @Unique(['game_id'])
 export class GameEntity {
     @PrimaryGeneratedColumn('uuid')
-    game_id: string;
+    gameid: string;
 
     @Column({
         type: 'varchar',
@@ -16,11 +16,11 @@ export class GameEntity {
     option_1_text: string;
 
     @Column()
-    option_1_img: string;
+    option_1_img?: string;
 
     @Column({ type: 'varchar', nullable: false })
     option_2_text: string;
 
     @Column()
-    option_2_img: string;
+    option_2_img?: string;
 }

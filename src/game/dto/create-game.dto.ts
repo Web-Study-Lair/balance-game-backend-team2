@@ -23,11 +23,11 @@ export class BalanceDto {
     @ValidateNested()
     // 중첩 객체의 타입 지정
     @Type(() => BalanceOptionDto)
-    option_1: BalanceOptionDto;
+    option1: BalanceOptionDto;
 
     @ValidateNested()
     @Type(() => BalanceOptionDto)
-    option_2: BalanceOptionDto;
+    option2: BalanceOptionDto;
 }
 
 export class CreateGameDto {
