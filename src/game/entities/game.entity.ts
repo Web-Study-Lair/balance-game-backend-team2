@@ -4,23 +4,23 @@ import { Column, Entity, PrimaryGeneratedColumn, Unique } from "typeorm";
 @Unique(['game_id'])
 export class GameEntity {
     @PrimaryGeneratedColumn('uuid')
-    gameid: string;
+    game_id: string;
 
-    @Column({
-        type: 'varchar',
-        default: null,
-    })
+    @Column({ type: 'varchar', nullable: true })
     title?: string;
 
     @Column({ type: 'varchar', nullable: false })
     option_1_text: string;
 
-    @Column()
+    @Column({ type: 'varchar', nullable: true })
     option_1_img?: string;
 
     @Column({ type: 'varchar', nullable: false })
     option_2_text: string;
 
-    @Column()
+    @Column({ type: 'varchar', nullable: true })
     option_2_img?: string;
+
+    @Column({ type: 'varchar', nullable: false })
+    user_id: string;
 }

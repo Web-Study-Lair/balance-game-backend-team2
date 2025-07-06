@@ -9,5 +9,5 @@ export class DeleteGameDto extends PartialType(CreateGameDto) {
     user: UserDto
 
     @IsString()
-    balanceId: string;
+    gameId: string;
 }

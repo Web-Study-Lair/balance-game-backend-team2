@@ -3,7 +3,7 @@ import { IsOptional, IsString, ValidateNested } from "class-validator";
 
 export class UserDto {
     @IsString()
-    userid: string;
+    userId: string;
 }
 
 export class BalanceOptionDto {
