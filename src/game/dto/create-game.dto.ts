@@ -6,7 +6,7 @@ export class UserDto {
     userId: number;
 }
 
-export class GameOptionDto {
+export class SelectOptionDto {
     @IsString()
     text: string;
 
@@ -22,12 +22,12 @@ export class GameDto {
     // 중첩 객체에 대해 그 내부 속성까지 검증을 수행하게 해주는 데코레이터
     @ValidateNested()
     // 중첩 객체의 타입 지정
-    @Type(() => GameOptionDto)
-    option1: GameOptionDto;
+    @Type(() => SelectOptionDto)
+    selectOption1: SelectOptionDto;
 
     @ValidateNested()
-    @Type(() => GameOptionDto)
-    option2: GameOptionDto;
+    @Type(() => SelectOptionDto)
+    selectOption2: SelectOptionDto;
 }
 
 export class CreateGameDto {
