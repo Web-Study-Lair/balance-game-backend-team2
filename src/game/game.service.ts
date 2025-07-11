@@ -15,11 +15,11 @@ export class GameService {
   async createGame(createGameDto: CreateGameDto) {
     const game = this.gameRepository.create({
       user_id: createGameDto.user.userId,
-      title: createGameDto.balance.title,
-      option_1_text: createGameDto.balance.option1.text,
-      option_1_img: createGameDto.balance.option1.img,
-      option_2_text: createGameDto.balance.option2.text,
-      option_2_img: createGameDto.balance.option2.img
+      title: createGameDto.game.title,
+      option_1_text: createGameDto.game.option1.text,
+      option_1_img: createGameDto.game.option1.img,
+      option_2_text: createGameDto.game.option2.text,
+      option_2_img: createGameDto.game.option2.img
     });
 
     return await this.gameRepository.save(game);

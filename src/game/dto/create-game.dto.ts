@@ -6,7 +6,7 @@ export class UserDto {
     userId: string;
 }
 
-export class BalanceOptionDto {
+export class GameOptionDto {
     @IsString()
     text: string;
 
@@ -14,7 +14,7 @@ export class BalanceOptionDto {
     img?: any;
 }
 
-export class BalanceDto {
+export class GameDto {
     @IsOptional()
     @IsString()
     title?: string;
@@ -22,12 +22,12 @@ export class BalanceDto {
     // 중첩 객체에 대해 그 내부 속성까지 검증을 수행하게 해주는 데코레이터
     @ValidateNested()
     // 중첩 객체의 타입 지정
-    @Type(() => BalanceOptionDto)
-    option1: BalanceOptionDto;
+    @Type(() => GameOptionDto)
+    option1: GameOptionDto;
 
     @ValidateNested()
-    @Type(() => BalanceOptionDto)
-    option2: BalanceOptionDto;
+    @Type(() => GameOptionDto)
+    option2: GameOptionDto;
 }
 
 export class CreateGameDto {
@@ -36,6 +36,6 @@ export class CreateGameDto {
     user: UserDto;
 
     @ValidateNested()
-    @Type(() => BalanceDto)
-    balance: BalanceDto;
+    @Type(() => GameDto)
+    game: GameDto;
 }
