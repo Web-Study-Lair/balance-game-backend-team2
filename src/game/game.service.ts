@@ -3,8 +3,7 @@ import { CreateGameDto } from './dto/create-game.dto';
 import { DeleteGameDto } from './dto/delete-game.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { GameEntity } from './entities/game.entity';
-import { DeepPartial, Repository } from 'typeorm';
-import { UUID } from 'crypto';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class GameService {
@@ -29,7 +28,7 @@ export class GameService {
     return await this.gameRepository.find();
   }
 
-  async findGamesByUserID(userId: string) {
+  async findGamesByUserID(userId: number) {
     return await this.gameRepository.find({
       where: {
         user_id: userId
@@ -38,6 +37,6 @@ export class GameService {
   }
 
   async removeGame(deleteGameDto: DeleteGameDto) {
-    return await this.gameRepository.delete({ game_id: deleteGameDto.gameId });
+    return await this.gameRepository.delete({ id: deleteGameDto.gameId });
   }
 }

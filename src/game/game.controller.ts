@@ -18,7 +18,7 @@ export class GameController {
   }
 
   @Get('/:userId')
-  findOneGame(@Param('userId') userId: string) {
+  findOneGame(@Param('userId') userId: number) {
     return this.gameService.findGamesByUserID(userId);
   }
 

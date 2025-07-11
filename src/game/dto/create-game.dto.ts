@@ -1,9 +1,9 @@
 import { Type } from "class-transformer";
-import { IsOptional, IsString, ValidateNested } from "class-validator";
+import { IsNumber, IsOptional, IsString, ValidateNested } from "class-validator";
 
 export class UserDto {
-    @IsString()
-    userId: string;
+    @IsNumber()
+    userId: number;
 }
 
 export class GameOptionDto {

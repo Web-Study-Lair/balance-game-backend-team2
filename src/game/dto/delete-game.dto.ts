@@ -1,6 +1,6 @@
 import { PartialType } from '@nestjs/mapped-types';
 import { CreateGameDto, UserDto } from './create-game.dto';
-import { IsString, ValidateNested } from 'class-validator';
+import { IsNumber, ValidateNested } from 'class-validator';
 import { Type } from 'class-transformer';
 
 export class DeleteGameDto extends PartialType(CreateGameDto) {
@@ -8,6 +8,6 @@ export class DeleteGameDto extends PartialType(CreateGameDto) {
     @Type(() => UserDto)
     user: UserDto
 
-    @IsString()
-    gameId: string;
+    @IsNumber()
+    gameId: number;
 }
