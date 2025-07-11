@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn, Unique } from "typeorm";
+import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn, Unique } from "typeorm";
+import { SelectOptionEntity } from "./select_option.entity";
 
 @Entity('game')
 @Unique(['id'])
@@ -6,21 +7,18 @@ export class GameEntity {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column({ type: 'varchar', nullable: true })
+    @Column({ nullable: true, default: null })
     title?: string;
 
-    @Column({ type: 'varchar', nullable: false })
-    option_1_text: string;
-
-    @Column({ type: 'varchar', nullable: true })
-    option_1_img?: string;
-
-    @Column({ type: 'varchar', nullable: false })
-    option_2_text: string;
-
-    @Column({ type: 'varchar', nullable: true })
-    option_2_img?: string;
-
-    @Column({ type: 'number', nullable: false })
+    @Column({ nullable: false })
     user_id: number;
+
+    /**
+     * TODO
+     * 추후에 User 엔티티가 생기면 위의 user_id를 ManyToOne으로 변경
+     * https://marklee1117.tistory.com/45 참조
+     */
+
+    @OneToMany(() => SelectOptionEntity, (option) => option.game)
+    options: SelectOptionEntity[]
 }
