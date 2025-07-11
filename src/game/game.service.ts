@@ -4,24 +4,41 @@ import { DeleteGameDto } from './dto/delete-game.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { GameEntity } from './entities/game.entity';
 import { Repository } from 'typeorm';
+import { SelectOptionEntity } from './entities/select_option.entity';
 
 @Injectable()
 export class GameService {
   constructor(
-    @InjectRepository(GameEntity) private gameRepository: Repository<GameEntity>
+    @InjectRepository(GameEntity) private gameRepository: Repository<GameEntity>,
+    @InjectRepository(SelectOptionEntity) private optionRepository: Repository<SelectOptionEntity>
   ) { }
 
   async createGame(createGameDto: CreateGameDto) {
-    const game = this.gameRepository.create({
-      user_id: createGameDto.user.userId,
+    const savedGame = await this.gameRepository.save({
       title: createGameDto.game.title,
-      option_1_text: createGameDto.game.option1.text,
-      option_1_img: createGameDto.game.option1.img,
-      option_2_text: createGameDto.game.option2.text,
-      option_2_img: createGameDto.game.option2.img
+      user_id: createGameDto.user.userId
     });
 
-    return await this.gameRepository.save(game);
+    // 아래처럼 쓰면 비동기 작업을 병렬로 처리함
+    // 두개의 query를 동시에 날리고 둘 다 완료될 때 까지 기다림
+    // option의 경우 서로 다른 레코드를 참조하고
+    // 원자성을 보장할 필요가 없기 때문에 아래처럼 해도 되지만,
+    // 만약 중복 키/제약조건 충돌 가능한 데이터를 다루는 경우 주의 필요
+    // 트랜잭션을 코드상에서 구현해야할 수도 있음 
+    await Promise.all([
+      this.optionRepository.save({
+        text: createGameDto.game.selectOption1.text,
+        img: createGameDto.game.selectOption1.img,
+        game: savedGame,
+      }),
+      this.optionRepository.save({
+        text: createGameDto.game.selectOption2.text,
+        img: createGameDto.game.selectOption2.img,
+        game: savedGame,
+      }),
+    ]);
+
+    return savedGame;
   }
 
   async findAllGames() {
@@ -33,10 +50,12 @@ export class GameService {
       where: {
         user_id: userId
       },
+      // relations: ['options']
     });
   }
 
   async removeGame(deleteGameDto: DeleteGameDto) {
+    // select_options의 onDelete: 'CASCADE' 옵션으로 인해 game만 삭제해도 select_options가 같이 삭제됨
     return await this.gameRepository.delete({ id: deleteGameDto.gameId });
   }
 }
