@@ -27,5 +27,5 @@ export class GameEntity {
         // 참조 : https://velog.io/@jeong3320/typeorm-cascade%EC%98%B5%EC%85%98
         cascade: true,
     })
-    select_options: SelectOptionEntity[]
+    select_option: SelectOptionEntity[]
 }

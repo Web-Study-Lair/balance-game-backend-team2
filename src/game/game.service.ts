@@ -42,16 +42,25 @@ export class GameService {
   }
 
   async findAllGames() {
-    return await this.gameRepository.find();
+    const games = await this.gameRepository.find();
+
+    // DTO에 맞춰서 객체의 내용물을 변환
+    return plainToInstance(GameResponseDto, games, {
+      // DTO에서 @Expose를 붙이지 않은 요소는 전부 제외한채 반환하도록 하는 옵션
+      excludeExtraneousValues: true,
+    })
   }
 
   async findGamesByUserID(userId: number) {
-    return await this.gameRepository.find({
+    const games = await this.gameRepository.find({
       where: {
         user_id: userId
       },
-      // relations: ['options']
     });
+
+    return plainToInstance(GameResponseDto, games, {
+      excludeExtraneousValues: true,
+    })
   }
 
   async removeGame(deleteGameDto: DeleteGameDto) {
