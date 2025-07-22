@@ -5,15 +5,18 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { GameEntity } from './entities/game.entity';
 import { Repository } from 'typeorm';
 import { SelectOptionEntity } from './entities/select_option.entity';
+import { plainToInstance } from 'class-transformer';
+import { GameResponseDto } from './dto/game-response.dto';
 
 @Injectable()
 export class GameService {
   constructor(
     @InjectRepository(GameEntity) private gameRepository: Repository<GameEntity>,
-    @InjectRepository(SelectOptionEntity) private optionRepository: Repository<SelectOptionEntity>
+    @InjectRepository(SelectOptionEntity) private selectOptionRepository: Repository<SelectOptionEntity>
   ) { }
 
   async createGame(createGameDto: CreateGameDto) {
+    try {
     const savedGame = await this.gameRepository.save({
       title: createGameDto.game.title,
       user_id: createGameDto.user.userId
@@ -25,20 +28,36 @@ export class GameService {
     // 원자성을 보장할 필요가 없기 때문에 아래처럼 해도 되지만,
     // 만약 중복 키/제약조건 충돌 가능한 데이터를 다루는 경우 주의 필요
     // 트랜잭션을 코드상에서 구현해야할 수도 있음 
-    await Promise.all([
-      this.optionRepository.save({
-        text: createGameDto.game.selectOption1.text,
-        img: createGameDto.game.selectOption1.img,
+      await Promise.all
+        (
+          // [
+          //   this.selectOptionRepository.save({
+          //     text: createGameDto.game.selectOption1.text,
+          //     img: createGameDto.game.selectOption1.img,
+          //     game: savedGame,
+          //   }),
+          //   this.selectOptionRepository.save({
+          //     text: createGameDto.game.selectOption2.text,
+          //     img: createGameDto.game.selectOption2.img,
+          //     game: savedGame,
+          //   }),
+          // ]
+          createGameDto.game.selectOption.map(option => {
+            this.selectOptionRepository.save({
+              text: option.text,
+              img: option.img,
         game: savedGame,
-      }),
-      this.optionRepository.save({
-        text: createGameDto.game.selectOption2.text,
-        img: createGameDto.game.selectOption2.img,
-        game: savedGame,
-      }),
-    ]);
+            })
+          })
+        );
 
-    return savedGame;
+      return {
+        "message": "밸런스 게임 생성 완료",
+        "gameId": savedGame.id
+      };
+    } catch (e) {
+      return e;
+    }
   }
 
   async findAllGames() {
@@ -65,6 +84,7 @@ export class GameService {
 
   async removeGame(deleteGameDto: DeleteGameDto) {
     // select_options의 onDelete: 'CASCADE' 옵션으로 인해 game만 삭제해도 select_options가 같이 삭제됨
-    return await this.gameRepository.delete({ id: deleteGameDto.gameId });
+    const result = await this.gameRepository.delete({ id: deleteGameDto.gameId });
+    return result;
   }
 }

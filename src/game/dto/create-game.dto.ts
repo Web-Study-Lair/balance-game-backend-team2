@@ -23,11 +23,7 @@ export class GameDto {
     @ValidateNested()
     // 중첩 객체의 타입 지정
     @Type(() => SelectOptionDto)
-    selectOption1: SelectOptionDto;
-
-    @ValidateNested()
-    @Type(() => SelectOptionDto)
-    selectOption2: SelectOptionDto;
+    selectOption: SelectOptionDto[];
 }
 
 export class CreateGameDto {
