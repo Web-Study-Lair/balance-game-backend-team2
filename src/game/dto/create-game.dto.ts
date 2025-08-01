@@ -15,9 +15,8 @@ export class SelectOptionDto {
 }
 
 export class GameDto {
-    @IsOptional()
     @IsString()
-    title?: string;
+    title: string;
 
     // 중첩 객체에 대해 그 내부 속성까지 검증을 수행하게 해주는 데코레이터
     @ValidateNested()

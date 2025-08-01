@@ -7,8 +7,8 @@ export class GameEntity {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column({ nullable: true, default: null })
-    title?: string;
+    @Column({ default: null })
+    title: string;
 
     @Column({ nullable: false })
     user_id: number;
